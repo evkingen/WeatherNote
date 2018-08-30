@@ -9,7 +9,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.View;
 
-abstract class BaseFragment extends Fragment implements BaseView.View {
+public abstract class BaseFragment extends Fragment implements BaseView.View {
 
     //это базовый фрагмент от которого будут наследоваться все остальные наши фрагменты
     // необходим для того чтобы не писать один и тот же код несколько раз подряд

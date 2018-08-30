@@ -47,6 +47,7 @@ import android.widget.Toast;
 
 import com.alohagoha.weathernote.data.DataManager;
 import com.alohagoha.weathernote.data.IDataManager;
+import com.alohagoha.weathernote.plan.PlanFragment;
 import com.alohagoha.weathernote.service.GeoInfoService;
 import com.squareup.picasso.Picasso;
 
@@ -308,8 +309,16 @@ public class BaseActivity extends AppCompatActivity
     private void showLocation(Location location) {
         if (location == null)
             return;
-        gps_locality = findViewById(R.id.gps_locality);
-        gps_locality.setText(formatLocation(location));
+        final Location flocation = location;
+        this.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                gps_locality = findViewById(R.id.gps_locality);
+                if (gps_locality!=null)
+                gps_locality.setText(formatLocation(flocation));
+            }
+        });
+
     }
 
     private String formatLocation(Location location) {
@@ -436,17 +445,20 @@ public class BaseActivity extends AppCompatActivity
 
 
     //работаем с навигацией
-
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-        Toasty.success(this, "This is menu!").show();
+
         if (id == R.id.nav_settings) {
             // Handle the camera action
         } else if (id == R.id.nav_info) {
             // Handle the camera action
+        } else if (id == R.id.nav_note) {
+            addFragment(new PlanFragment());
+        } else if (id == R.id.nav_home) {
+            addFragment(new WeatherFragment());
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
